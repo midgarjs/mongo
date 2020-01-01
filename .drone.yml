@@ -22,8 +22,8 @@ steps:
   commands:
     - rm -rf ./*
 services:
-- name: mongodb
-  image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: TeStPasswirD
+- name: mongo
+  image: mongo:4
+  command: [ --smallfiles ]
+  ports:
+  - 27017
