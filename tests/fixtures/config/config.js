@@ -31,5 +31,14 @@ export default {
   },
   plugin: {
     dir: resolve('../plugins')
+  },
+  mongo: {
+    default: {
+      uri: 'mongodb://localhost:27017/midgar?connectTimeoutMS=1000',
+      options: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      }
+    }
   }
 }

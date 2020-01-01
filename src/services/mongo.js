@@ -21,8 +21,12 @@ class MongoService {
     utils.timer.start('midgar-init-mongo')
     this.mid.debug('@midgar/mongo: start init Mongoose')
 
+    const connexions = Object.keys(this.config)
+
+    if (!connexions.length) throw new Error('@midgar/mongo: No connexion found in config !')
+
     // List connection set in config
-    await utils.asyncMap(Object.keys(this.config), async connexion => {
+    await utils.asyncMap(connexions, async connexion => {
       const connexionConfig = this.config[connexion]
       if (!connexionConfig.uri) throw new Error('@midgar/mongo: Invalid db config for ' + connexion + ' connexion !')
 
@@ -36,7 +40,7 @@ class MongoService {
      *
      * @event @midgar/mongo:afterLoadModels
      */
-    await this.mid.pm.emit('@midgar/mongo:afterLoadModels', this)
+    await this.mid.emit('@midgar/mongo:afterLoadModels', this)
 
     const time = utils.timer.getTime('midgar-init-mongo')
     this.mid.debug('@midgar/mongo: Mongoose init in ' + time[0] + 's, ' + time[1] + 'ms')

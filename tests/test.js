@@ -26,6 +26,7 @@ const initMidgar = async () => {
  * Test the service plugin
  */
 describe('Mongo', function () {
+  this.timeout(10000)
   beforeEach(async () => {
     mid = await initMidgar()
   })
