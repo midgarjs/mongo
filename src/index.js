@@ -1,5 +1,5 @@
 import { Plugin } from '@midgar/midgar'
-import MongoMigrateStorage from '../libs/migrate-storage.js'
+import MongoMigrateStorage from './libs/migrate-storage.js'
 
 const STORAGE_KEY = 'mid:mongo'
 const MODELS_DIR_KEY = 'midgar-mongo-models'
@@ -28,7 +28,7 @@ class MongoPlugin extends Plugin {
     this.pm.addPluginDir(this.modelsDirKey, 'mongo-models')
 
     // Add migration storage
-    this.pm.on('@midgar/migrate:init', (migrateService) => {
+    this.on('@midgar/migrate:init', (migrateService) => {
       migrateService.addStorage(STORAGE_KEY, MongoMigrateStorage)
     })
   }

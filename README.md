@@ -1,4 +1,4 @@
-![](https://ci.midgar.io/app/rest/builds/buildType:(id:Midgar_Mongo_Build)/statusIcon) [![Coverage](https://sonar.midgar.io/api/project_badges/measure?project=Midgar_Mongo&metric=coverage)](https://sonar.midgar.io/dashboard?id=Midgar_Mongo)
+[![Coverage](https://sonar.midgar.io/api/project_badges/measure?project=Midgar_Mongo&metric=coverage)](https://sonar.midgar.io/dashboard?id=Midgar_Mongo)
 
 ## @midgar/mongo
 

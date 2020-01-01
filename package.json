@@ -8,9 +8,10 @@
     "postinstall": "midgar add @midgar/mongo",
     "preuninstall": "midgar rm @midgar/mongo",
     "build-docs": "jsdoc -c ./jsdoc.js -t ./node_modules/ink-docstrap/template ./README.md -r .",
-    "test": "mocha --require esm tests/*.js --reporter mocha-multi-reporters --reporter-options configFile=mocha-multi-reporters.json --exit",
+    "test": "mocha --require esm tests/*.js --exit",
+    "test:ci": "mocha --require esm tests/*.js --reporter mocha-sonarqube-reporter --reporter-options output=reports/xunit.xml --exit",
     "eslint": "eslint -f json -o reports/.eslint-report.json src/ || exit 0",
-    "coverage": "nyc -i esm --reporter=lcov npm run test"
+    "coverage": "nyc -i esm --reporter=lcov npm run test:ci"
   },
   "repository": {
     "type": "git",
