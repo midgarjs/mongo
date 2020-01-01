@@ -5,6 +5,7 @@ steps:
 - name: build
   image: node:latest
   commands:
+    - sleep 5
     - yarn
     - yarn run coverage
     - yarn run eslint
@@ -24,6 +25,5 @@ steps:
 services:
 - name: mongo
   image: mongo:4
-  command: [ --smallfiles ]
   ports:
   - 27017
