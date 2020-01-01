@@ -1,4 +1,5 @@
-[![Coverage](https://sonar.midgar.io/api/project_badges/measure?project=Midgar_Mongo&metric=coverage)](https://sonar.midgar.io/dashboard?id=Midgar_Mongo)
+[![Build Status](https://drone.midgar.io/api/badges/Midgar/mongo/status.svg)](https://drone.midgar.io/Midgar/mongo) 
+[![Coverage](https://sonar.midgar.io/api/project_badges/measure?project=Midgar%3Amongo&metric=coverage)](https://sonar.midgar.io/dashboard?id=Midgar%3Amongo)
 
 ## @midgar/mongo
 
