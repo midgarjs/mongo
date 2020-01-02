@@ -15,6 +15,7 @@ const MongoService = service.service
 
 // fix for TypeError: describe is not a function with mocha-teamcity-reporter
 const { describe, it } = mocha
+const INVALID_MIGRATION_MSG = 'Invalid migration !'
 
 const expect = chai.expect
 chai.use(dirtyChai)
@@ -24,6 +25,28 @@ const initMidgar = async () => {
   mid = new Midgar()
   await mid.start(path.join(__dirname, 'fixtures/config'))
   return mid
+}
+
+const migrateShouldResult = [
+  {
+    plugin: 'test-plugin',
+    name: '0.1.0-create-test.js',
+    type: 'data'
+  },
+  {
+    plugin: 'test-plugin-2',
+    name: '0.1.0-create-test.js',
+    type: 'data'
+  }
+]
+
+function isSameMigation (migration, migration2) {
+  if (migration.plugin === migration2.plugin && migration.name === migration2.name &&
+    migration.type === migration2.type) {
+    return true
+  }
+
+  return false
 }
 
 /**
@@ -81,6 +104,20 @@ describe('Mongo', function () {
     await migrateService.up(null, STORAGE_KEY)
 
     migrations = await MigrationModel.find()
+    expect(migrations.length).to.eql(2)
+
+    expect(isSameMigation(migrations[0], migrateShouldResult[0])).to.be.true(INVALID_MIGRATION_MSG)
+    expect(isSameMigation(migrations[1], migrateShouldResult[1])).to.be.true(INVALID_MIGRATION_MSG)
+
+    await migrateService.down(1, STORAGE_KEY)
+
+    migrations = await MigrationModel.find()
     expect(migrations.length).to.eql(1)
+    expect(isSameMigation(migrations[0], migrateShouldResult[0])).to.be.true(INVALID_MIGRATION_MSG)
+
+    await migrateService.down(1, STORAGE_KEY)
+
+    migrations = await MigrationModel.find()
+    expect(migrations.length).to.eql(0)
   })
 })
