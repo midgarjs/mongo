@@ -1,55 +1,58 @@
+const MIGRATION_MODEL = 'mid:migration'
 
-class MoongooseStorage {
-  constructor(midgar) {
-    this.midgar = midgar
-    this.mongooseService = this.midgar.getService('midgar:mongoose')
+/**
+ * MongoMigrateStorage class
+ * Migration storage for MongoPlugin
+ */
+class MongoMigrateStorage {
+  constructor (mid) {
+    this.mid = mid
+    this.mongoService = this.mid.getService('mid:mongo')
   }
 
-  async isInstalled() {
+  async isInstalled () {
     return true
   }
 
-  async getVersions() {
-    const DbVersion = this.mongooseService.getModel('midgar:dbVersion')
-    return DbVersion.find()
+  async getMigrations () {
+    const MigrationModel = this.mongoService.getModel(MIGRATION_MODEL)
+    return MigrationModel.find()
   }
 
   /**
    * Save executed version in database
-   * 
+   *
    * @param {string} plugin Plugin name
-   * @param {string} name   Version file name
-   * @param {string} type   Version type (schema|data)
-   * 
-   * @returns {Version} Sequelize version model
+   * @param {string} name   Migration file name
+   * @param {string} type   Migration type (schema|data)
+   *
+   * @returns {Migration} Sequelize version model
    */
-  async saveVersion(plugin, name, type) {
-    const DbVersion = this.mongooseService.getModel('midgar:dbVersion')
-    const dbVersion = new DbVersion({ plugin, name, type, date: new Date })
-    await dbVersion.save()
+  async saveMigration (plugin, name, type) {
+    const MigrationModel = this.mongoService.getModel(MIGRATION_MODEL)
+    const migration = new MigrationModel({ plugin, name, type, date: new Date() })
+    await migration.save()
   }
 
   /**
    * Delete executed version in database
-   * 
+   *
    * @param {string} plugin Plugin name
-   * @param {string} name   Version file name
-   * @param {string} type   Version type (schema|data)
-   * 
-   * @returns {Version} Sequelize version model
+   * @param {string} name   Migration file name
+   * @param {string} type   Migration type (schema|data)
+   *
+   * @returns {Migration} Sequelize version model
    */
-  async deleteVersion (plugin, name, type) {
-    const DbVersion = this.mongooseService.getModel('midgar:dbVersion')
-    await DbVersion.deleteOne({ plugin, name, type })
+  async deleteMigration (plugin, name, type) {
+    const MigrationModel = this.mongoService.getModel(MIGRATION_MODEL)
+    await MigrationModel.deleteOne({ plugin, name, type })
   }
 
-  getCallArgs() {
+  getCallArgs () {
     return [
-      this.mongooseService
+      this.mongoService
     ]
   }
 }
 
-module.exports = (midgar) => {
-  return new MoongooseStorage(midgar)
-}
+export default MongoMigrateStorage

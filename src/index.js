@@ -28,7 +28,7 @@ class MongoPlugin extends Plugin {
     this.pm.addPluginDir(this.modelsDirKey, 'mongo-models')
 
     // Add migration storage
-    this.on('@midgar/migrate:init', (migrateService) => {
+    this.mid.on('@midgar/migrate:init', (migrateService) => {
       migrateService.addStorage(STORAGE_KEY, MongoMigrateStorage)
     })
   }

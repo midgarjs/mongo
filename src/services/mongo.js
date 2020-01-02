@@ -30,7 +30,7 @@ class MongoService {
       const connexionConfig = this.config[connexion]
       if (!connexionConfig.uri) throw new Error('@midgar/mongo: Invalid db config for ' + connexion + ' connexion !')
 
-      this.connexions[connexion] = await mongoose.connect(connexionConfig.uri, connexionConfig.options ? connexionConfig.options : {});
+      this.connexions[connexion] = await mongoose.connect(connexionConfig.uri, connexionConfig.options ? connexionConfig.options : {})
     })
 
     await this.loadModels()
@@ -61,10 +61,12 @@ class MongoService {
     await utils.asyncMap(files, async (file) => {
       this.mid.silly('@midgar/mongo: Load model ' + file)
       if (!file.export.getModel || !file.export.name) {
-        throw new Error('Invalide mongoose model: ' + file.path + ' !')
+        throw new Error('@midgar/mongo: Invalide mongoose model: ' + file.path + ' !')
       }
 
       const modelName = file.export.name
+
+      this.mid.debug('@midgar/mongo: Load model ' + file.path)
 
       const connexionName = file.export.connexion || 'default'
       const connexion = this.getConnexion(connexionName)

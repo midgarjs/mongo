@@ -34,7 +34,7 @@ export default {
   },
   mongo: {
     default: {
-      uri: 'mongodb://mongo:27017/midgar?connectTimeoutMS=1000',
+      uri: 'mongodb://localhost:27017/midgar?connectTimeoutMS=1000',
       options: {
         useNewUrlParser: true,
         useUnifiedTopology: true

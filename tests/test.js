@@ -2,12 +2,16 @@ import mocha from 'mocha'
 import chai from 'chai'
 import dirtyChai from 'dirty-chai'
 import path from 'path'
-import MongoPlugin from '../src/index'
+
+import MongoPlugin, { STORAGE_KEY } from '../src/index'
+import service from '../src/services/mongo'
 
 /**
  * @type {Midgar}
  */
 import Midgar from '@midgar/midgar'
+
+const MongoService = service.service
 
 // fix for TypeError: describe is not a function with mocha-teamcity-reporter
 const { describe, it } = mocha
@@ -32,15 +36,51 @@ describe('Mongo', function () {
   })
 
   afterEach(async () => {
+    // Clean mongoose models
+    mid.getService('mid:mongo').getConnexion('default').models = {}
+    const migrateService = mid.getService('mid:migrate')
+    await migrateService.down(null, STORAGE_KEY)
     await mid.stop()
     mid = null
   })
 
   /**
-   * Test if the plugin id load
+   * Test if the plugin is load
    */
-  it('plugin is load', async () => {
+  it('test plugin', async () => {
     const plugin = mid.pm.getPlugin('@midgar/mongo')
     expect(plugin).to.be.an.instanceof(MongoPlugin, 'Plugin is not an instance of MongoPlugin')
+
+    const service = mid.getService('mid:mongo')
+    expect(service).to.be.an.instanceof(MongoService, 'Service is not an instance of MongoService')
+  })
+
+  /**
+   * Test if model are loded
+   */
+  it('test model', async () => {
+    const mongoService = mid.getService('mid:mongo')
+    const TestModel = mongoService.getModel('mid:test-model')
+
+    // Test schema
+    expect(TestModel.prototype.schema.obj).to.have.all.keys(['code', 'name'])
+
+    const TestModel2 = mongoService.getModel('mid:test-model-2')
+
+    // Test schema
+    expect(TestModel2.prototype.schema.obj).to.have.all.keys(['description', 'label'])
+  })
+
+  it('migrations', async () => {
+    const migrateService = mid.getService('mid:migrate')
+    const mongoService = mid.getService('mid:mongo')
+    const MigrationModel = mongoService.getModel('mid:migration')
+    let migrations = await MigrationModel.find()
+
+    expect(migrations.length).to.eql(0)
+    await migrateService.up(null, STORAGE_KEY)
+
+    migrations = await MigrationModel.find()
+    expect(migrations.length).to.eql(1)
   })
 })
