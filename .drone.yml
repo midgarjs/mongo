@@ -4,6 +4,9 @@ name: nodejs
 steps:
 - name: build
   image: node:latest
+  environment:
+    MONGO_CONNEXION_STR:
+      from_secret: mongo_connexion_str
   commands:
     - sleep 5
     - yarn
