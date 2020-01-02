@@ -1,5 +1,5 @@
 import { Plugin } from '@midgar/midgar'
-import MongoMigrateStorage from './libs/migrate-storage.js'
+import MongoMigrateStorage from './libs/mongo-migrate-storage.js'
 
 const STORAGE_KEY = 'mid:mongo'
 const MODELS_DIR_KEY = 'midgar-mongo-models'
