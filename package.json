@@ -19,7 +19,7 @@
     "url": "git+https://github.com/midgarjs/mongo.git"
   },
   "dependencies": {
-    "@midgar/midgar": "^1.0.0-alpha.2.5",
+    "@midgar/midgar": "^1.0.0-alpha.2.6",
     "@midgar/migrate": "^1.0.0-alpha.1.1",
     "@midgar/service": "^1.0.0-alpha.1.2",
     "@midgar/utils": "^1.0.0-alpha.1.5",
