@@ -1,5 +1,3 @@
-import Midgar from "@midgar/midgar"
-
 const MIGRATION_MODEL = 'mid:migration'
 
 /**

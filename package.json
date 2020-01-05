@@ -1,6 +1,6 @@
 {
   "name": "@midgar/mongo",
-  "version": "1.0.0-alpha.1.0",
+  "version": "1.0.0-alpha.1.1",
   "description": "A Midgar plugin to add Mongoose.",
   "main": "src/index.js",
   "module": "true",
@@ -26,7 +26,7 @@
     "@midgar/migrate": "^1.0.0-alpha.1.1",
     "@midgar/service": "^1.0.0-alpha.1.4",
     "@midgar/utils": "^1.0.0-alpha.1.5",
-    "mongoose": "^5.8.3",
+    "mongoose": "^5.8.4",
     "uid-safe": "^2.1.5"
   },
   "devDependencies": {
