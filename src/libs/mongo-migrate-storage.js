@@ -1,3 +1,5 @@
+import Midgar from "@midgar/midgar"
+
 const MIGRATION_MODEL = 'mid:migration'
 
 /**
@@ -5,7 +7,14 @@ const MIGRATION_MODEL = 'mid:migration'
  * Migration storage for MongoPlugin
  */
 class MongoMigrateStorage {
+  /**
+   * @param {Midgar} mid Midgar instance
+   */
   constructor (mid) {
+    /**
+     * Midgar instance
+     * @type {Midgar}
+     */
     this.mid = mid
     this.mongoService = this.mid.getService('mid:mongo')
   }

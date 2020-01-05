@@ -26,15 +26,15 @@ export default {
   },
   log: {
     dir: getTmpDir('logs'),
-    stdout: false,
+    stdout: true,
     level: 'error'
   },
-  plugin: {
-    dir: resolve('../plugins')
+  pm: {
+    localPath: resolve('../plugins')
   },
   mongo: {
     default: {
-      uri: process.env.MONGO_CONNEXION_STR ? process.env.MONGO_CONNEXION_STR : 'mongodb://localhost:27017/midgar?connectTimeoutMS=1000',
+      uri: 'mongodb://localhost:27017/midgar_test?connectTimeoutMS=1000',
       options: {
         useNewUrlParser: true,
         useUnifiedTopology: true

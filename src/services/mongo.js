@@ -1,16 +1,36 @@
 import mongoose from 'mongoose'
 import utils from '@midgar/utils'
 
+const DEFAULT_CONNEXION_NAME = 'default'
+const serviceName = 'mid:mongo'
+
 /**
  * Mongo service
  */
 class MongoService {
   constructor (mid) {
+    /**
+     * Midgar instance
+     * @type {Midgar}
+     */
     this.mid = mid
-    // Get config
+
+    /**
+     * Config
+     * @type {Object}
+     */
     this.config = utils.assignRecursive({}, this.mid.config.mongo || {}, {})
 
+    /**
+     * Connexions indexed by name
+     * @type {Object}
+     */
     this.connexions = {}
+
+    /**
+     * Models indexed by name
+     * @type {Object}
+     */
     this.models = {}
   }
 
@@ -20,6 +40,13 @@ class MongoService {
   async init () {
     utils.timer.start('midgar-init-mongo')
     this.mid.debug('@midgar/mongo: start init Mongoose')
+
+    /**
+     * beforeInit event.
+     *
+     * @event @midgar/mongo:beforeInit
+     */
+    await this.mid.emit('@midgar/mongo:beforeInit', this)
 
     const connexions = Object.keys(this.config)
 
@@ -68,7 +95,7 @@ class MongoService {
 
       this.mid.debug('@midgar/mongo: Load model ' + file.path)
 
-      const connexionName = file.export.connexion || 'default'
+      const connexionName = file.export.connexion || DEFAULT_CONNEXION_NAME
       const connexion = this.getConnexion(connexionName)
       const Model = await file.export.getModel(connexion, this.mid)
 
@@ -95,7 +122,8 @@ class MongoService {
    *
    * @return {Mongoose}
    */
-  getConnexion (name) {
+  getConnexion (name = DEFAULT_CONNEXION_NAME) {
+    if (!this.connexions[name]) throw new Error(`@midgar/mongo: Invalid connexion name ${name} !`)
     return this.connexions[name]
   }
 
@@ -107,12 +135,12 @@ class MongoService {
    * @return {Model}
    */
   getModel (name) {
-    if (!this.models[name]) throw new Error('Unknow model ' + name + ' !')
+    if (!this.models[name]) throw new Error(`@midgar/mongo: Invalid model name ${name} !`)
     return this.models[name]
   }
 }
 
 export default {
   service: MongoService,
-  name: 'mid:mongo'
+  name: serviceName
 }

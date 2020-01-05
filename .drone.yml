@@ -5,10 +5,7 @@ steps:
 - name: build
   image: node:latest
   environment:
-    MONGO_CONNEXION_STR:
-      from_secret: mongo_connexion_str
   commands:
-    - sleep 5
     - yarn
     - yarn run coverage:ci
     - yarn run eslint:ci
@@ -25,9 +22,4 @@ steps:
 - name: clean
   image: node:latest
   commands:
-    - rm -rf ./*
-services:
-- name: mongo
-  image: mongo:4
-  ports:
-  - 27017
+    - rm -rf ./node_modules/

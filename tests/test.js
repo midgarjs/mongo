@@ -3,6 +3,8 @@ import chai from 'chai'
 import dirtyChai from 'dirty-chai'
 import path from 'path'
 
+import { MongoMemoryServer } from 'mongodb-memory-server'
+
 import MongoPlugin, { STORAGE_KEY } from '../src/index'
 import service from '../src/services/mongo'
 
@@ -12,6 +14,7 @@ import service from '../src/services/mongo'
 import Midgar from '@midgar/midgar'
 
 const MongoService = service.service
+const mongod = new MongoMemoryServer()
 
 // fix for TypeError: describe is not a function with mocha-teamcity-reporter
 const { describe, it } = mocha
@@ -23,6 +26,8 @@ chai.use(dirtyChai)
 let mid = null
 const initMidgar = async () => {
   mid = new Midgar()
+  // Mok db
+  mid.on('@midgar/mongo:beforeInit', (mongo) => mongod.getConnectionString().then(uri => { mongo.config.default.uri = uri }))
   await mid.start(path.join(__dirname, 'fixtures/config'))
   return mid
 }
