@@ -5,6 +5,7 @@ steps:
 - name: build
   image: node:latest
   environment:
+    MONGO_CONNEXION_URI: mongodb://mongo:27017/midgar-test?connectTimeoutMS=1000"
   commands:
     - yarn
     - yarn run coverage:ci
@@ -19,7 +20,8 @@ steps:
     ver: 1.0
     sources: src/
     exclusions: docs/**/*
-- name: clean
-  image: node:latest
-  commands:
-    - rm -rf ./node_modules/
+services:
+- name: mongo
+  image: mongo:4
+  ports:
+  - 27017
