@@ -3,8 +3,6 @@ import chai from 'chai'
 import dirtyChai from 'dirty-chai'
 import path from 'path'
 
-import { MongoMemoryServer } from 'mongodb-memory-server'
-
 import MongoPlugin, { STORAGE_KEY } from '../src/index'
 import service from '../src/services/mongo'
 
@@ -14,7 +12,6 @@ import service from '../src/services/mongo'
 import Midgar from '@midgar/midgar'
 
 const MongoService = service.service
-const mongod = new MongoMemoryServer()
 
 // fix for TypeError: describe is not a function with mocha-teamcity-reporter
 const { describe, it } = mocha
@@ -26,8 +23,6 @@ chai.use(dirtyChai)
 let mid = null
 const initMidgar = async () => {
   mid = new Midgar()
-  // Mok db
-  mid.on('@midgar/mongo:beforeInit', (mongo) => mongod.getConnectionString().then(uri => { mongo.config.default.uri = uri }))
   await mid.start(path.join(__dirname, 'fixtures/config'))
   return mid
 }
@@ -59,17 +54,16 @@ function isSameMigation (migration, migration2) {
  */
 describe('Mongo', function () {
   this.timeout(10000)
-  beforeEach(async () => {
+  before(async () => {
     mid = await initMidgar()
   })
 
-  afterEach(async () => {
+  after(async () => {
     // Clean mongoose models
-    mid.getService('mid:mongo').getConnexion('default').models = {}
+    // mid.getService('mid:mongo').getConnexion('default').models = {}
     const migrateService = mid.getService('mid:migrate')
     await migrateService.down(null, STORAGE_KEY)
     await mid.stop()
-    mid = null
   })
 
   /**

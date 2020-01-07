@@ -34,7 +34,7 @@ export default {
   },
   mongo: {
     default: {
-      uri: 'mongodb://localhost:27017/midgar_test?connectTimeoutMS=1000',
+      uri: process.env.MONGO_CONNEXION_URI ? process.env.MONGO_CONNEXION_URI : 'mongodb://localhost:27017/midgar_test?connectTimeoutMS=1000',
       options: {
         useNewUrlParser: true,
         useUnifiedTopology: true
