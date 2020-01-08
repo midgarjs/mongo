@@ -2,7 +2,7 @@
 const name = 'mid:test-model'
 export default {
   name,
-  getModel (mongoose) {
+  model: (mongoose) => {
     const schema = mongoose.Schema({
       code: {
         type: String,

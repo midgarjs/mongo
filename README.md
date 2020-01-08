@@ -52,7 +52,7 @@ const name = 'namespace:monmodel'
 
 export default {
   name,
-  getModel (mongoose) {
+  model: (mongoose) => {
     const schema = mongoose.Schema({
       name: {
         type: String,

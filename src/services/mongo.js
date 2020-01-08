@@ -87,9 +87,8 @@ class MongoService {
     // Create the models object
     await utils.asyncMap(files, async (file) => {
       this.mid.silly('@midgar/mongo: Load model ' + file)
-      if (!file.export.getModel || !file.export.name) {
-        throw new Error('@midgar/mongo: Invalide mongoose model: ' + file.path + ' !')
-      }
+      if (!file.export.model) throw new Error(`@midgar/mongo: Missing model entry in model : ${file.path} !`)
+      if (!file.export.name) throw new Error(`@midgar/mongo: Missing name entry in model : ${file.path} !`)
 
       const modelName = file.export.name
 
@@ -97,7 +96,7 @@ class MongoService {
 
       const connexionName = file.export.connexion || DEFAULT_CONNEXION_NAME
       const connexion = this.getConnexion(connexionName)
-      const Model = await file.export.getModel(connexion, this.mid)
+      const Model = await file.export.model(connexion, this.mid)
 
       this.addModel(modelName, Model)
     }, true)
