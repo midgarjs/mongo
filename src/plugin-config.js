@@ -1,5 +1,5 @@
 export default {
-  dirs: {
-    'midgar-mongo-models': 'models'
+  moduleTypes: {
+    'midgar-mongo-model': 'models'
   }
 }

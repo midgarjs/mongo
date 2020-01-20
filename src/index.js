@@ -2,9 +2,9 @@ import { Plugin } from '@midgar/midgar'
 import MongoMigrateStorage from './libs/mongo-migrate-storage.js'
 
 const STORAGE_KEY = 'mid:mongo'
-const MODELS_DIR_KEY = 'midgar-mongo-models'
+const MODULE_TYPE_KEY = 'midgar-mongo-model'
 
-export { STORAGE_KEY, MODELS_DIR_KEY }
+export { STORAGE_KEY, MODULE_TYPE_KEY }
 
 /**
  * MongoPlugin
@@ -14,9 +14,9 @@ class MongoPlugin extends Plugin {
     super(...args)
     /**
      * Model dir key
-     * @type {String}
+     * @type {string}
      */
-    this.modelsDirKey = MODELS_DIR_KEY
+    this.moduleTypeKey = MODULE_TYPE_KEY
     this.migrateStorageKey = STORAGE_KEY
   }
 
@@ -25,7 +25,7 @@ class MongoPlugin extends Plugin {
    */
   async init () {
     // Declare models dir
-    this.pm.addPluginDir(this.modelsDirKey, 'mongo-models')
+    this.pm.addModuleType(this.moduleTypeKey, 'mongo-models')
 
     // Add migration storage
     this.mid.on('@midgar/migrate:init', (migrateService) => {

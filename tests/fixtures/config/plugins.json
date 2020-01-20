@@ -5,6 +5,6 @@
   },
   "@midgar/service": true,
   "@midgar/migrate": true,
-  "test-plugin": true,
-  "test-plugin-2": true
+  "test-plugin": { "local": true },
+  "test-plugin-2": { "local": true }
 }

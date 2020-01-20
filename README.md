@@ -1,5 +1,5 @@
 [![Build Status](https://drone.midgar.io/api/badges/Midgar/mongo/status.svg)](https://drone.midgar.io/Midgar/mongo) 
-[![Coverage](https://sonar.midgar.io/api/project_badges/measure?project=Midgar%3Amongo&metric=coverage)](https://sonar.midgar.io/dashboard?id=Midgar%3Amongo)
+[![Coverage](https://sonar.midgar.io/api/project_badges/measure?project=midgar-mongo&metric=coverage)](https://sonar.midgar.io/dashboard?id=midgar-mongo)
 
 ## @midgar/mongo
 
@@ -8,13 +8,13 @@ Intégration de [Moogoose](https://mongoosejs.com) pour [Midgar](https://github.
 ## Installation
 
 ```sh
-$ npm i @midgar/mongo --save
+$ npm i @midgar/mongo
 ```
 Si tout s'est bien passé, un message de confirmation s'affiche:
 
 ```sh
 #midgar-cli
-@midgar/mongo added to plugins.js !
+@midgar/mongo added to plugins.json !
 ```
 
 ## Configuration
@@ -43,10 +43,11 @@ Vous devez ajouter plusieur connection à la configuration:
 ```
 
 ## Fonctionnement
-Ajoute un dossier de plugin **midgar-mongo-models**: ./mongo-models/.
+Ce plugin ajoute un type de module **midgar-mongo-model** dans le dossier ./mongo-models/.
 
-## Fichier model
+## Model
 
+Voici un exemple de model:
 ```js
 const name = 'namespace:monmodel'
 
@@ -73,7 +74,7 @@ export default {
 }
 ```
 
-Vous trouverez plus d'ingormations dans la [documentation de Mongoose](https://mongoosejs.com/docs/guide.html)
+Vous trouverez plus d'informations sur la structure des model mongoose dans la [documentation](https://mongoosejs.com/docs/guide.html).
 
 ## Migration
 

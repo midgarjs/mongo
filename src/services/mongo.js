@@ -5,7 +5,7 @@ const DEFAULT_CONNEXION_NAME = 'default'
 const serviceName = 'mid:mongo'
 
 /**
- * Mongo service
+ * MongoService class
  */
 class MongoService {
   constructor (mid) {
@@ -17,19 +17,19 @@ class MongoService {
 
     /**
      * Config
-     * @type {Object}
+     * @type {object}
      */
     this.config = utils.assignRecursive({}, this.mid.config.mongo || {}, {})
 
     /**
-     * Connexions indexed by name
-     * @type {Object}
+     * Connexions dictionary
+     * @type {object}
      */
     this.connexions = {}
 
     /**
-     * Models indexed by name
-     * @type {Object}
+     * Models dictionary
+     * @type {object}
      */
     this.models = {}
   }
@@ -55,7 +55,7 @@ class MongoService {
     // List connection set in config
     await utils.asyncMap(connexions, async connexion => {
       const connexionConfig = this.config[connexion]
-      if (!connexionConfig.uri) throw new Error('@midgar/mongo: Invalid db config for ' + connexion + ' connexion !')
+      if (!connexionConfig.uri) throw new Error(`@midgar/mongo: Invalid db config for ${connexion} connexion !`)
 
       this.connexions[connexion] = await mongoose.connect(connexionConfig.uri, connexionConfig.options ? connexionConfig.options : {})
     })
@@ -70,7 +70,7 @@ class MongoService {
     await this.mid.emit('@midgar/mongo:afterLoadModels', this)
 
     const time = utils.timer.getTime('midgar-init-mongo')
-    this.mid.debug('@midgar/mongo: Mongoose init in ' + time[0] + 's, ' + time[1] + 'ms')
+    this.mid.debug(`@midgar/mongo: Mongoose init in ${time} ms`)
   }
 
   /**
@@ -80,19 +80,17 @@ class MongoService {
     this.mid.debug('@midgar/mongo: Load models...')
 
     const mongoosePlugin = this.mid.pm.getPlugin('@midgar/mongo')
-    const modelsDirKey = mongoosePlugin.modelsDirKey
     // Get models files content
 
-    const files = await this.mid.pm.importDir(modelsDirKey)
+    const files = await this.mid.pm.importModules(mongoosePlugin.moduleTypeKey)
     // Create the models object
     await utils.asyncMap(files, async (file) => {
-      this.mid.silly('@midgar/mongo: Load model ' + file)
       if (!file.export.model) throw new Error(`@midgar/mongo: Missing model entry in model : ${file.path} !`)
       if (!file.export.name) throw new Error(`@midgar/mongo: Missing name entry in model : ${file.path} !`)
 
       const modelName = file.export.name
 
-      this.mid.debug('@midgar/mongo: Load model ' + file.path)
+      this.mid.debug(`@midgar/mongo: Load model ${file.path}.`)
 
       const connexionName = file.export.connexion || DEFAULT_CONNEXION_NAME
       const connexion = this.getConnexion(connexionName)
@@ -107,7 +105,7 @@ class MongoService {
   /**
    * Add a model
    *
-   * @param {String} name Model name
+   * @param {string} name Model name
    * @param {Model} Model Mogoose model
    */
   addModel (name, Model) {
@@ -117,7 +115,7 @@ class MongoService {
   /**
    * Return a Mongoose instance
    *
-   * @param {String} name Connexion name
+   * @param {string} name Connexion name
    *
    * @return {Mongoose}
    */
@@ -129,7 +127,7 @@ class MongoService {
   /**
    * Return a Mongo model by name
    *
-   * @param {String} name Model name
+   * @param {string} name Model name
    *
    * @return {Model}
    */

@@ -17,21 +17,12 @@ function getTmpDir (name) {
 }
 
 export default {
-  web: {
-    port: 4000,
-    host: 'localhost',
-    ssl: false,
-    sslCert: '',
-    sslKey: ''
-  },
   log: {
     dir: getTmpDir('logs'),
     stdout: true,
     level: 'error'
   },
-  pm: {
-    localPath: resolve('../plugins')
-  },
+  pluginsLocalPath: resolve('../plugins'),
   mongo: {
     default: {
       uri: process.env.MONGO_CONNEXION_URI ? process.env.MONGO_CONNEXION_URI : 'mongodb://localhost:27017/midgar_test?connectTimeoutMS=1000',
