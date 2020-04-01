@@ -16,7 +16,7 @@ function getTmpDir (name) {
   return dirname
 }
 
-export default {
+const config = {
   log: {
     dir: getTmpDir('logs'),
     stdout: true,
@@ -25,7 +25,7 @@ export default {
   pluginsLocalPath: resolve('../plugins'),
   mongo: {
     default: {
-      uri: process.env.MONGO_CONNEXION_URI ? process.env.MONGO_CONNEXION_URI : 'mongodb://localhost:27017/midgar_test?connectTimeoutMS=1000',
+      uri: process.env.MONGO_CONNEXION_URI ? process.env.MONGO_CONNEXION_URI : 'mongodb://localhost:27017/midgar-test?connectTimeoutMS=1000',
       options: {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -33,3 +33,15 @@ export default {
     }
   }
 }
+
+
+// Set Auth options
+if (process.env.MONGO_CONNEXION_USER && process.env.MONGO_CONNEXION_PASSWORD) {
+  config.mongo.default.options = {
+    auth: { authSource: 'admin' },
+    user: process.env.MONGO_CONNEXION_USER,
+    pass: process.env.MONGO_CONNEXION_PASSWORD
+  }
+}
+
+export default config

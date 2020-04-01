@@ -19,7 +19,7 @@ class MongoService {
      * Config
      * @type {object}
      */
-    this.config = utils.assignRecursive({}, this.mid.config.mongo || {}, {})
+    this.config = utils.assignRecursive({}, this.mid.config.mongo || {})
 
     /**
      * Connexions dictionary
@@ -134,6 +134,17 @@ class MongoService {
   getModel (name) {
     if (!this.models[name]) throw new Error(`@midgar/mongo: Invalid model name ${name} !`)
     return this.models[name]
+  }
+
+  /**
+   * Check if arg is a valid mongo id
+   *
+   * @param {String} value Value to check
+   *
+   * @return {Boolean}
+   */
+  isValidId (value) {
+   return mongoose.Types.ObjectId.isValid(value)
   }
 }
 

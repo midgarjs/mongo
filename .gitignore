@@ -5,5 +5,6 @@ node_modules/
 .nyc_output/
 .sonarlint/
 .mocha-report.xml
+.env
 coverage/
 reports/

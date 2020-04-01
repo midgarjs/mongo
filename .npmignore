@@ -8,7 +8,8 @@ node_modules/
 coverage/
 reports/
 docs/
-tests/
+test/
+.env
 .drone.yml
 .eslintrc.js
 jsdoc.js

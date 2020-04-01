@@ -1,4 +1,4 @@
-import mocha from 'mocha'
+import { describe, it } from 'mocha'
 import chai from 'chai'
 import dirtyChai from 'dirty-chai'
 import path from 'path'
@@ -13,8 +13,6 @@ import Midgar from '@midgar/midgar'
 
 const MongoService = service.service
 
-// fix for TypeError: describe is not a function with mocha-teamcity-reporter
-const { describe, it } = mocha
 const INVALID_MIGRATION_MSG = 'Invalid migration !'
 
 const expect = chai.expect
@@ -59,8 +57,6 @@ describe('Mongo', function () {
   })
 
   after(async () => {
-    // Clean mongoose models
-    // mid.getService('mid:mongo').getConnexion('default').models = {}
     const migrateService = mid.getService('mid:migrate')
     await migrateService.down(null, STORAGE_KEY)
     await mid.stop()
@@ -93,6 +89,9 @@ describe('Mongo', function () {
     expect(TestModel2.prototype.schema.obj).to.have.all.keys(['description', 'label'])
   })
 
+  /**
+   * Test migrations execution
+   */
   it('migrations', async () => {
     const migrateService = mid.getService('mid:migrate')
     const mongoService = mid.getService('mid:mongo')
@@ -118,5 +117,15 @@ describe('Mongo', function () {
 
     migrations = await MigrationModel.find()
     expect(migrations.length).to.eql(0)
+  })
+
+  /**
+   * Test isValidId method
+   */
+  it('isValidId', async () => {
+    const mongoService = mid.getService('mid:mongo')
+
+    expect(mongoService.isValidId('5e83ba4544f4e244bf6725d4')).to.be.true()
+    expect(mongoService.isValidId('5e83ba4544f4e244bf6725d42')).to.be.false()
   })
 })
