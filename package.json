@@ -24,8 +24,6 @@
     "@midgar/midgar": "git+https://gitea.midgar.io/Midgar/midgar.git",
     "@midgar/migrate": "git+https://gitea.midgar.io/Midgar/migrate.git",
     "@midgar/service": "git+https://gitea.midgar.io/Midgar/service.git",
-    
-    "@midgar/service": "^1.0.0-alpha.2.0",
     "@midgar/utils": "^1.0.0-alpha.1.5",
     "mongoose": "^5.9.9",
     "uid-safe": "^2.1.5"
