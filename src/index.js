@@ -35,3 +35,14 @@ class MongoPlugin extends Plugin {
 }
 
 export default MongoPlugin
+
+export const dependencies = [
+  '@midgar/service',
+  '@midgar/migrate'
+]
+
+export const config = {
+  moduleTypes: {
+    'midgar-mongo-model': 'models'
+  }
+}

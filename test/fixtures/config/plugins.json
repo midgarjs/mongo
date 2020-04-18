@@ -3,8 +3,6 @@
     "enabled": true,
     "path": "../../.."
   },
-  "@midgar/service": true,
-  "@midgar/migrate": true,
   "test-plugin": { "local": true },
   "test-plugin-2": { "local": true }
 }
