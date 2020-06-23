@@ -1,6 +1,6 @@
 {
   "name": "@midgar/mongo",
-  "version": "1.0.0-alpha.1.4",
+  "version": "1.0.0-beta.1.0",
   "description": "A Midgar plugin to add Mongoose.",
   "main": "src/index.js",
   "module": "true",
@@ -21,11 +21,11 @@
     "url": "git+https://github.com/midgarjs/mongo.git"
   },
   "dependencies": {
-    "@midgar/midgar": "git+https://gitea.midgar.io/Midgar/midgar.git",
-    "@midgar/migrate": "git+https://gitea.midgar.io/Midgar/migrate.git",
-    "@midgar/service": "git+https://gitea.midgar.io/Midgar/service.git",
-    "@midgar/utils": "^1.0.0-alpha.1.5",
-    "mongoose": "^5.9.9",
+    "@midgar/midgar": "^1.0.0-beta.1.0",
+    "@midgar/migrate": "^1.0.0-beta.1.0",
+    "@midgar/service": "^1.0.0-beta.1.0",
+    "@midgar/utils": "^1.0.0",
+    "mongoose": "^5.9.20",
     "uid-safe": "^2.1.5"
   },
   "devDependencies": {
@@ -41,11 +41,11 @@
     "eslint-plugin-standard": "^4.0.1",
     "esm": "^3.2.25",
     "ink-docstrap": "^1.3.2",
-    "jest": "^25.3.0",
+    "jest": "^26.1.0",
     "jsdoc": "^3.6.4",
-    "mocha": "^7.1.1",
+    "mocha": "^8.0.1",
     "mocha-sonarqube-reporter": "^1.0.1",
-    "nyc": "^15.0.1"
+    "nyc": "^15.1.0"
   },
   "keywords": [
     "midgar",
